@@ -1,0 +1,23 @@
+
+{
+  "appId": "com.swift-docs-hub.app",
+  "productName": "Swift Docs Hub",
+  "directories": {
+    "output": "release/"
+  },
+  "files": [
+    "dist/**/*",
+    "electron/**/*"
+  ],
+  "mac": {
+    "category": "public.app-category.business",
+    "target": ["dmg"]
+  },
+  "win": {
+    "target": ["nsis"]
+  },
+  "linux": {
+    "target": ["AppImage", "deb"],
+    "category": "Office"
+  }
+}

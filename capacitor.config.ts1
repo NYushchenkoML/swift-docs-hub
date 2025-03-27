@@ -1,0 +1,23 @@
+
+import { CapacitorConfig } from '@capacitor/cli';
+
+const config: CapacitorConfig = {
+  appId: 'app.lovable.08d05631e90d4f8b87ea288ab3a081ea',
+  appName: 'swift-docs-hub',
+  webDir: 'dist',
+  server: {
+    url: 'https://08d05631-e90d-4f8b-87ea-288ab3a081ea.lovableproject.com?forceHideBadge=true',
+    cleartext: true
+  },
+  android: {
+    buildOptions: {
+      keystorePath: undefined,
+      keystoreAlias: undefined,
+      keystorePassword: undefined,
+      keystoreAliasPassword: undefined,
+      signingType: 'apksigner'
+    }
+  }
+};
+
+export default config;
