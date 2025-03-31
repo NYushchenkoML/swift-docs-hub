@@ -280,3 +280,8 @@ ipcMain.handle('install-update', () => {
 ipcMain.handle('get-app-version', () => {
   return app.getVersion();
 });
+
+// Добавьте обработчик для выхода из приложения
+ipcMain.handle('quit-app', () => {
+  app.quit();
+});

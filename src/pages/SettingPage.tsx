@@ -47,7 +47,7 @@ const SettingPage: React.FC = () => {
   }, []);
 
   const handleBack = () => {
-    navigate('/');
+    navigate('/')
   };
 
   // Добавляем функцию сохранения настроек

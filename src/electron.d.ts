@@ -5,6 +5,7 @@ interface Window {
     getPrinterConfig: () => Promise<any>;
     updatePrinterConfig: (config: any) => Promise<{ success: boolean }>;
     getAppVersion: () => Promise<string>;
+    quitApp: () => Promise<void>;
     
     // Методы для обновлений
     checkForUpdates: () => Promise<void>;

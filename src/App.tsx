@@ -71,6 +71,7 @@
               <Route path="/documents/:id" element={<DocumentDetail />} />
               <Route path="/forecast" element={<Forecast />} />
               <Route path="/settings" element={<SettingPage />} />
+              <Route path="/old-path" element={<Navigate to="/new-path" replace />} />
               <Route path="*" element={<NotFound />} />
             </Routes>          
             <style>

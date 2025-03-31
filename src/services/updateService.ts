@@ -1,9 +1,8 @@
 import { Capacitor } from '@capacitor/core';
-import { CapacitorHttp } from '@capacitor/core';
+import { Http } from '@capacitor-community/http'; // Используем community плагин
 import { Filesystem, Directory } from '@capacitor/filesystem';
 import { App } from '@capacitor/app';
 import { Browser } from '@capacitor/browser';
-// import { toast } from 'react-toastify';
 import { toast } from 'sonner';
 import { electronService, getPlatform } from './electronService';
 
@@ -74,8 +73,8 @@ export const checkForUpdates = async (): Promise<UpdateInfo> => {
     
     // Запрашиваем последний релиз с GitHub
     try {
-      // Используем CapacitorHttp
-      const response = await CapacitorHttp.get({
+      // Используем Http из @capacitor-community/http
+      const response = await Http.get({
         url: 'https://api.github.com/repos/NYushchenkoML/swift-docs-hub/releases/latest',
         headers: {
           'Accept': 'application/vnd.github.v3+json'
@@ -86,9 +85,19 @@ export const checkForUpdates = async (): Promise<UpdateInfo> => {
         return { hasUpdate: false, error: 'Не удалось получить информацию о релизах' };
       }
       
-      // CapacitorHttp уже возвращает объект, а не строку
-      const release = typeof response.data === 'string' ? JSON.parse(response.data) : response.data;
-      const latestVersion = release.tag_name.replace('v', '');
+      // Безопасно парсим данные
+      const release = typeof response.data === 'string' 
+        ? JSON.parse(response.data) 
+        : response.data;
+      
+      // Проверяем наличие тега версии
+      if (!release || !release.tag_name) {
+        console.error('Некорректный формат ответа от GitHub API:', release);
+        return { hasUpdate: false, error: 'Некорректный формат данных о релизе' };
+      }
+      
+      // Безопасно извлекаем версию
+      const latestVersion = release.tag_name.replace(/^v/, '');
       console.log('Latest version:', latestVersion);
       
       // Сравниваем версии
@@ -161,23 +170,41 @@ export const downloadAndInstallUpdate = async (updateInfo: UpdateInfo): Promise<
       const fileName = `swift-docs-hub-${updateInfo.version}.apk`;
       console.log('Downloading file:', fileName);
       
-      // Используем CapacitorHttp для скачивания
-      const downloadResult = await Filesystem.downloadFile({
-        url: updateInfo.downloadUrl,
-        path: fileName,
-        directory: Directory.Cache
-      });
-      
-      if (!downloadResult.path) {
-        throw new Error('Не удалось загрузить файл обновления');
+      try {
+        // Скачиваем файл с помощью fetch и сохраняем через Filesystem
+        const response = await fetch(updateInfo.downloadUrl);
+        const blob = await response.blob();
+        
+        // Конвертируем blob в base64
+        const reader = new FileReader();
+        const base64Data = await new Promise<string>((resolve) => {
+          reader.onloadend = () => {
+            resolve(reader.result as string);
+          };
+          reader.readAsDataURL(blob);
+        });
+        
+        // Удаляем префикс data:application/octet-stream;base64,
+        const base64Content = base64Data.split(',')[1];
+        
+        // Сохраняем файл с помощью Filesystem
+        const result = await Filesystem.writeFile({
+          path: fileName,
+          data: base64Content,
+          directory: Directory.Cache,
+          recursive: true
+        });
+        
+        console.log('Download complete, installing APK', result.uri);
+        toast.success('Обновление загружено. Установка...');
+        
+        // Открываем файл для установки
+        await Browser.open({ url: result.uri });
+        return true;
+      } catch (error) {
+        console.error('Error downloading and saving file:', error);
+        throw new Error(`Ошибка при скачивании файла: ${error.message}`);
       }
-      
-      console.log('Download complete, installing APK');
-      toast.success('Обновление загружено. Установка...');
-      
-      // Используем Browser.open для открытия файла
-      await Browser.open({ url: downloadResult.path });
-      return true;
     } else {
       console.log('Updates not supported on this platform');
       toast.warning('Обновление не поддерживается в веб-версии');

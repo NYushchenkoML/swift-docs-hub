@@ -9,6 +9,9 @@ contextBridge.exposeInMainWorld('electron', {
   getPrinterConfig: () => ipcRenderer.invoke('get-printer-config'),
   updatePrinterConfig: (config) => ipcRenderer.invoke('update-printer-config', config),
   
+  // Добавляем метод для выхода из приложения
+  quitApp: () => ipcRenderer.invoke('quit-app'),
+  
   // Методы для обновлений
   checkForUpdates: () => ipcRenderer.invoke('check-for-updates'),
   downloadUpdate: () => ipcRenderer.invoke('download-update'),
