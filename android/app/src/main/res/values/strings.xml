@@ -1,0 +1,7 @@
+<?xml version='1.0' encoding='utf-8'?>
+<resources>
+    <string name="app_name">Swift Docs Hub</string>
+    <string name="title_activity_main">Swift Docs Hub</string>
+    <string name="package_name">com.nikitayushchenko.swiftdocshub</string>
+    <string name="custom_url_scheme">com.nikitayushchenko.swiftdocshub</string>
+</resources>

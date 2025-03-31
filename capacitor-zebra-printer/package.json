@@ -1,0 +1,50 @@
+{
+    "name": "capacitor-zebra-printer",
+    "version": "1.0.0",
+    "description": "Capacitor plugin for printing to Zebra printers via TCP/IP",
+    "main": "dist/plugin.js",
+    "module": "dist/esm/index.js",
+    "types": "dist/esm/index.d.ts",
+    "scripts": {
+        "build": "npm run clean && tsc && rollup -c rollup.config.js",
+        "clean": "rimraf ./dist",
+        "watch": "tsc --watch"
+    },
+    "author": "Swift Docs Hub",
+    "license": "MIT",
+    "dependencies": {
+        "@capacitor/core": "^4.0.0"
+    },
+    "devDependencies": {
+        "@capacitor/android": "^4.0.0",
+        "@rollup/plugin-node-resolve": "^16.0.1",
+        "rimraf": "^3.0.2",
+        "rollup": "^2.77.2",
+        "typescript": "^4.7.4"
+    },
+    "peerDependencies": {
+        "@capacitor/core": "^4.0.0"
+    },
+    "files": [
+        "dist/",
+        "android/",
+        "ios/",
+        "capacitor-zebra-printer.podspec"
+    ],
+    "keywords": [
+        "capacitor",
+        "plugin",
+        "native",
+        "zebra",
+        "printer",
+        "zpl"
+    ],
+    "capacitor": {
+        "android": {
+            "src": "android"
+        },
+        "ios": {
+            "src": "ios"
+        }
+    }
+}
