@@ -1,7 +1,8 @@
 import React, { useEffect, useState } from 'react';
 import { checkForUpdates, downloadAndInstallUpdate } from '../services/updateService';
 import { electronService, getPlatform } from '../services/electronService';
-import { toast } from 'react-toastify';
+//import { toast } from 'react-toastify';
+import { toast } from 'sonner';
 import { Button } from './ui/button';
 import { Progress } from './ui/progress';
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from './ui/card';

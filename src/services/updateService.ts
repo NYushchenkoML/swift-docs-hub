@@ -3,7 +3,8 @@ import { CapacitorHttp } from '@capacitor/core';
 import { Filesystem, Directory } from '@capacitor/filesystem';
 import { App } from '@capacitor/app';
 import { Browser } from '@capacitor/browser';
-import { toast } from 'react-toastify';
+// import { toast } from 'react-toastify';
+import { toast } from 'sonner';
 import { electronService, getPlatform } from './electronService';
 
 interface UpdateInfo {

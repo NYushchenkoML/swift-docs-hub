@@ -7,19 +7,20 @@ import { Label } from '@/components/ui/label';
 import { toast } from 'sonner';
 import { electronService } from '@/services/electronService';
 import { Capacitor, registerPlugin } from '@capacitor/core';
+import { ZebraPrinter } from '@/plugins/zebra-printer';
 
 
 
 
-// Определите интерфейс для вашего плагина
-interface ZebraPrinterPlugin {
-  calibrate(options: { ip: string; port: number; timeout: number }): Promise<{ success: boolean; message?: string }>;
-  print(options: { ip: string; port: number; zpl: string; timeout: number }): Promise<{ success: boolean; message?: string }>;
-  getPrinterStatus(options: { ip: string; port: number; timeout: number }): Promise<{ success: boolean; message?: string; isReadyToPrint?: boolean; isPaused?: boolean; isHeadOpen?: boolean; isPaperOut?: boolean; isRibbonOut?: boolean }>;
-}
+// // Определите интерфейс для вашего плагина
+// interface ZebraPrinterPlugin {
+//   calibrate(options: { ip: string; port: number; timeout: number }): Promise<{ success: boolean; message?: string }>;
+//   print(options: { ip: string; port: number; zpl: string; timeout: number }): Promise<{ success: boolean; message?: string }>;
+//   getPrinterStatus(options: { ip: string; port: number; timeout: number }): Promise<{ success: boolean; message?: string; isReadyToPrint?: boolean; isPaused?: boolean; isHeadOpen?: boolean; isPaperOut?: boolean; isRibbonOut?: boolean }>;
+// }
 
-// Регистрируем плагин
-const ZebraPrinter = registerPlugin<ZebraPrinterPlugin>('ZebraPrinter');
+// // Регистрируем плагин
+// const ZebraPrinter = registerPlugin<ZebraPrinterPlugin>('ZebraPrinter');
 
 const SettingPage: React.FC = () => {
   const navigate = useNavigate();
